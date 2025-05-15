@@ -6,11 +6,20 @@ width: 95%;
 margin: auto;
 }
 
-.balance-card {
+.balance_section {
   background: linear-gradient(90deg, #8e2de2, #4a00e0); /* Purple gradient */
   color: white;
   padding: 20px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
+}
+
+.scrollable-half {
+      overflow-y: auto;
+      padding: 20px;
+}
+.transactions_div {
+  flex-grow:1; 
+  text-align: center;
 }
