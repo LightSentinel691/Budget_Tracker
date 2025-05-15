@@ -1,0 +1,16 @@
+.custom-hr {
+border: none;
+height: 2px;
+background-color: gray;
+width: 95%;
+margin: auto;
+}
+
+.balance-card {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0); /* Purple gradient */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
