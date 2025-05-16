@@ -8,6 +8,13 @@ const gym = document.querySelector(".gym");
 const celebrations = document.querySelector(".Celebrations");
 const fuel = document.querySelector(".Fuel");
 const recordTransactionButton = document.getElementById("recordTransactionsubmitButton");
+const subscriptionText = document.querySelector(".subscriptions_present");
+const shoppingText = document.querySelector(".shopping_present");
+const gymText = document.querySelector(".gym_present");
+const celebrationsText = document.querySelector(".celebrations_present");
+const fuelText = document.querySelector(".fuel_present");
+
+
 
 
 
@@ -49,6 +56,7 @@ recordTransactionButton.addEventListener('click', (e) => {
 let moneyInAccount = 100000;
 // This section handles the logic of our project
 setUserAccountBalance(moneyInAccount);
+updateTransactionText();
 
 
 
@@ -108,11 +116,33 @@ function getUserTransaction(TransactionMerchant, TransactionAmount, TransactionD
                 date: TransactionDate
             };
             storeUserTransaction(TransactionSelection, transactionObject);
+            changeSelectionType(TransactionSelection);
             closeModal();
             // Reset the form fields
             resetForm();
             // Call the function to display the transactions
             retrieveUserTransactions(TransactionSelection);
+}
+function changeSelectionType(selection) {
+    switch (selection) {
+        case "shopping":
+            shoppingText.textContent = `Shopping recorded`;
+            break;
+        case "subscriptions":
+            subscriptionText.textContent = `Subscriptions recorded`;
+            break;
+        case "gym":
+            gymText.textContent = `Gym recorded`;
+            break;
+        case "celebrations":
+            celebrationsText.textContent = `Celebrations recorded`;
+            break;
+        case "fuel":
+            fuelText.textContent = `Fuel recorded`;
+            break;
+        default:
+            console.log("Invalid selection");
+    }
 }
 
 
@@ -319,7 +349,22 @@ function getAllLocalStorage() {
 
 
 
+
+// onload check which elements have been placed in the local storage
+function updateTransactionText() {
+    const transactionTypes = ["shopping", "subscriptions", "gym", "celebrations", "fuel"];
+    transactionTypes.forEach(type => {
+        const storedData = localStorage.getItem(type);
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            if (parsedData.length > 0) {
+                document.querySelector(`.${type}_present`).textContent = `${type.charAt(0).toUpperCase() + type.slice(1)} recorded`;
+            }
+        }
+    });
+}
+
+
 // Generate a deposit page for user first Logging in to have their transactions shown - get the user amount
-
-
+//change text onn whether the entry field has content or not
 
