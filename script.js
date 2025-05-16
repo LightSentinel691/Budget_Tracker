@@ -13,6 +13,13 @@ const shoppingText = document.querySelector(".shopping_present");
 const gymText = document.querySelector(".gym_present");
 const celebrationsText = document.querySelector(".celebrations_present");
 const fuelText = document.querySelector(".fuel_present");
+const depositSubmitButton = document.getElementById("deposit_submit");
+const recordTransactionAmountError = document.getElementById("amountError");
+const recordTransactionSelectionError = document.getElementById("selectionError");
+const recordTransactionDateError = document.getElementById("dateError");
+const recordTransactionMerchantError = document.getElementById("merchantNameError");
+
+//Producing error on page load
 
 
 
@@ -25,7 +32,10 @@ wallet.addEventListener('click', (e) => {
 , true);
 
 deposit.addEventListener('click', (e) => {
-    depositMoney("500");
+    alert("Deposit money to your account");
+    openDepositModal();
+    
+    // depositMoney("500");
 });
 shopping.addEventListener('click', (e)=> {
     retrieveUserTransactions("shopping");
@@ -46,7 +56,16 @@ recordTransactionButton.addEventListener('click', (e) => {
     e.preventDefault();
     validateForm();
 });
-
+depositSubmitButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const depositAmount = document.getElementById("deposit_amount").value;
+    if (depositAmount) {
+        depositMoney(depositAmount);
+        closeDepositModal();
+    } else {
+        alert("Please enter a valid deposit amount.");
+    }
+});
 
 
 
@@ -98,6 +117,7 @@ function setUserAccountBalance(value) {
 function depositMoney(money) {
     let moneyInAccount = Number(money);
     setUserMoney("add", moneyInAccount);
+    console.log("Money in account" + moneyInAccount);
     setUserAccountBalance(getUserMoney());
 
 }
@@ -230,8 +250,17 @@ function generateEachUserTransaction(arr) {
     }
 
     function closeModal() {
+        resetErrorMessages();
         document.getElementById("modal").style.display = "none";
         document.getElementById("modalOverlay").style.display = "none";
+    }
+
+    function resetErrorMessages() {
+
+        recordTransactionAmountError.style.display = "none";
+        recordTransactionSelectionError.style.display = "none";
+        recordTransactionDateError.style.display = "none";
+        recordTransactionMerchantError.style.display = "none";
     }
 
     // Function to validate the form inputs
@@ -241,11 +270,6 @@ function generateEachUserTransaction(arr) {
         const recordTransactionDate = document.getElementById("date").value;
         const recordTransactionMerchant = document.getElementById("merchantName").value;
         
-        const recordTransactionAmountError = document.getElementById("amountError");
-        const recordTransactionSelectionError = document.getElementById("selectionError");
-        const recordTransactionDateError = document.getElementById("dateError");
-        const recordTransactionMerchantError = document.getElementById("merchantNameError");
-
         let isValid = true;
 
         if (isNaN(recordTransactionAmount) || recordTransactionAmount.trim() === "") {
@@ -274,10 +298,15 @@ function generateEachUserTransaction(arr) {
         } else {
             recordTransactionDateError.style.display = "none";
         }
-        getUserTransaction(recordTransactionMerchant, recordTransactionAmount, recordTransactionDate, recordTransactionSelection);
-        setUserMoney("sub", recordTransactionAmount);
-        setUserAccountBalance(getUserMoney());
-        return;
+
+
+        if (isValid) {
+            getUserTransaction(recordTransactionMerchant, recordTransactionAmount, recordTransactionDate, recordTransactionSelection);
+            setUserMoney("sub", recordTransactionAmount);
+            setUserAccountBalance(getUserMoney());
+            return;
+        }        
+        
     }
     
 
@@ -346,10 +375,6 @@ function getAllLocalStorage() {
 }
 
 
-
-
-
-
 // onload check which elements have been placed in the local storage
 function updateTransactionText() {
     const transactionTypes = ["shopping", "subscriptions", "gym", "celebrations", "fuel"];
@@ -366,5 +391,14 @@ function updateTransactionText() {
 
 
 // Generate a deposit page for user first Logging in to have their transactions shown - get the user amount
-//change text onn whether the entry field has content or not
 
+function openDepositModal() {
+    document.getElementById("modal2").style.display = "block";
+    document.getElementById("modalOverlay2").style.display = "block";
+    
+}
+
+function closeDepositModal() {
+    document.getElementById("modal2").style.display = "none";
+    document.getElementById("modalOverlay2").style.display = "none";
+}

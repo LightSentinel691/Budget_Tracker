@@ -271,7 +271,9 @@
                 <button
                   class="w-m-[5rem] pt-2 pb-2 pl-2 border-2 border-gray-300 rounded-sm"
                 >
-                  <span class="inline-block text-2xl pr-3" onclick="openModal()">+ Add New</span>
+                  <span class="inline-block text-2xl pr-3" onclick="openModal()"
+                    >+ Add New</span
+                  >
                 </button>
               </div>
             </div>
@@ -286,13 +288,14 @@
             </div>
             <div
               class="Transactions_container scrollable-half h-[22rem] ml-8 mr-6 border-2 border-gray-300 rounded-lg mb-4"
-            >
-            </div>
+            ></div>
           </div>
         </div>
       </div>
+      <!-- Modal for recording a user's transaction -->
       <div class="modal-overlay" id="modalOverlay"></div>
 
+      
       <div class="modal" id="modal">
         <form id="recordTransactionForm">
           <h2>Record a Transaction</h2>
@@ -302,10 +305,14 @@
             id="merchantName"
             placeholder="Enter merchant name"
           />
-          <span id="merchantNameError" style="color:red; display:none;">Please enter a valid Merchant Name.</span>
+          <span id="merchantNameError" style="color: red; display: none"
+            >Please enter a valid Merchant Name.</span
+          >
           <label for="amount">Amount:</label>
           <input type="text" id="amount" placeholder="Enter amount" />
-          <span id="amountError" style="color:red; display:none;">Please enter a valid number.</span>
+          <span id="amountError" style="color: red; display: none"
+            >Please enter a valid number.</span
+          >
 
           <label for="transactionType">Choose an option:</label>
           <select id="transactionType">
@@ -316,19 +323,40 @@
             <option value="celebrations">Celebrations</option>
             <option value="fuel">Fuel</option>
           </select>
-          <span id="selectionError" style="color:red; display:none;">Please select an option.</span>
+          <span id="selectionError" style="color: red; display: none"
+            >Please select an option.</span
+          >
 
           <label for="date">Select Date:</label>
           <input type="date" id="date" />
-          <span id="dateError" style="color:red; display:none;">Please select a date.</span>
+          <span id="dateError" style="color: red; display: none"
+            >Please select a date.</span
+          >
 
-          <button type="submit" id="recordTransactionsubmitButton" style="display: block;">Submit</button>
+          <button
+            type="submit"
+            id="recordTransactionsubmitButton"
+            style="display: block"
+          >
+            Submit
+          </button>
         </form>
-        <button onclick="closeModal()">Close</button>
+        <button onclick="closeModal()" style="display: block">Close</button>
+      </div>
+
+
+      <!-- Modal for Depositing Money -->
+      <div class="modal-overlay" id="modalOverlay2"></div>
+
+      <div class="modal" id="modal2">
+        <form>
+          <label for="amount">Enter Money to deposit:</label>
+          <input type="number" placeholder="Enter amount" id="deposit_amount"/>
+          <button type="submit" id="deposit_submit" class="modal2_btn">Submit</button>
+          <button type="button" class="modal2_btn" onclick="closeDepositModal()">Close</button>
+        </form>
       </div>
       <script src="script.js"></script>
     </div>
   </body>
 </html>
-
-

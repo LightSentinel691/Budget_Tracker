@@ -63,5 +63,13 @@
   color: white;
   border: none;
   cursor: pointer;
-  display: none;
+}
+
+.modal2_btn {
+  margin-top: 10px;
+  padding: 8px;
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
