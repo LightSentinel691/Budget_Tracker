@@ -79,6 +79,11 @@
   cursor: pointer;
 }
 
+.categories:hover {
+  background: linear-gradient(20deg, #8e2de2, #4a00e0); /* Purple gradient */
+  color: white;
+}
+
 
 @media only screen and (max-width: 900px) {
   .card_container, .expenses_section {
