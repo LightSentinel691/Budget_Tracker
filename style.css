@@ -6,6 +6,11 @@
   margin: auto;
 }
 
+.backgound {
+  background-color: rgba(142, 45, 226, 0.1);
+
+}
+
 .balance_section {
   background: linear-gradient(90deg, #8e2de2, #4a00e0); /* Purple gradient */
   color: white;

@@ -19,9 +19,6 @@ const recordTransactionSelectionError = document.getElementById("selectionError"
 const recordTransactionDateError = document.getElementById("dateError");
 const recordTransactionMerchantError = document.getElementById("merchantNameError");
 
-//Producing error on page load
-
-
 
 
 
@@ -32,10 +29,7 @@ wallet.addEventListener('click', (e) => {
 , true);
 
 deposit.addEventListener('click', (e) => {
-    alert("Deposit money to your account");
     openDepositModal();
-    
-    // depositMoney("500");
 });
 shopping.addEventListener('click', (e)=> {
     retrieveUserTransactions("shopping");
@@ -69,13 +63,17 @@ depositSubmitButton.addEventListener('click', (e) => {
 
 
 
+let moneyInAccount = 0;
 
-
-//Remove this global variable
-let moneyInAccount = 100000;
 // This section handles the logic of our project
-setUserAccountBalance(moneyInAccount);
-updateTransactionText();
+function getFirstDeposit() {
+    
+    setUserAccountBalance(moneyInAccount);
+    updateTransactionText();
+}
+
+// This section handles the logic of our project
+
 
 
 
@@ -389,8 +387,6 @@ function updateTransactionText() {
     });
 }
 
-
-// Generate a deposit page for user first Logging in to have their transactions shown - get the user amount
 
 function openDepositModal() {
     document.getElementById("modal2").style.display = "block";

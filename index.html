@@ -7,15 +7,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body onload="getFirstDeposit()">
     <div class="card_container flex">
-      <div class="side_navbar grow-1 min-w-3xs bg-gray-400">
-        <h1>FloPay</h1>
+      <div class="side_navbar grow-1 min-w-3xs backgound">
+        <h1 class="text-7xl pt-4 pl-3">Flo<span class="text-violet-600">Pay</span></h1>
 
-        <p>Dasboard</p>
-        <p>Reports</p>
-        <p>Wallets</p>
-        <p>Orders</p>
       </div>
       <div class="Body grow-3">
         <!-- Search bar section here-->
@@ -298,7 +294,7 @@
       
       <div class="modal" id="modal">
         <form id="recordTransactionForm">
-          <h2>Record a Transaction</h2>
+          <h2 class="text-4xl  font-semibold">Record a Transaction</h2>
           <label for="merchantName">Merchant Name:</label>
           <input
             type="text"
@@ -341,7 +337,7 @@
             Submit
           </button>
         </form>
-        <button onclick="closeModal()" style="display: block">Close</button>
+        <button onclick="closeModal()" style="display: block; margin-top: 0.5rem; width: 100%;">Close</button>
       </div>
 
 
