@@ -25,7 +25,7 @@ const recordTransactionMerchantError = document.getElementById("merchantNameErro
 //Event Listener Section
 wallet.addEventListener('click', (e) => {
     e.preventDefault();
-    depositMoney("1000");}
+    alert("Future update coming");}
 , true);
 
 deposit.addEventListener('click', (e) => {
@@ -71,19 +71,6 @@ function getFirstDeposit() {
     setUserAccountBalance(moneyInAccount);
     updateTransactionText();
 }
-
-// This section handles the logic of our project
-
-
-
-
-
-
-
-
-
-
-
 
 
 
