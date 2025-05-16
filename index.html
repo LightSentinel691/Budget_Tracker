@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -54,7 +53,7 @@
         >
           <div class="grow-4 pl-8">
             <p class="pl-5 pt-1">Your Balance</p>
-            <h1 class="pl-5 text-5xl">$10,000</h1>
+            <h1 id="my_balance" class="pl-5 text-5xl"></h1>
           </div>
           <div class="grow-1 p-3 justify-items-end">
             <div
@@ -158,7 +157,7 @@
                 </button>
               </div>
             </div>
-            <div class="flex pt-2 pb-2">
+            <div class="shopping flex pt-2 pb-2">
               <div
                 class="grow-1 justify-items-center content-center bg-gray-200 pt-5 pb-5 ml-4 border border-gray-300 rounded-sm"
               >
@@ -177,7 +176,7 @@
               </div>
             </div>
             <hr class="custom-hr" />
-            <div class="flex pt-2 pb-2">
+            <div class="subscriptions flex pt-2 pb-2">
               <div
                 class="grow-1 justify-items-center content-center bg-gray-200 pt-5 pb-5 ml-4 border border-gray-300 rounded-sm"
               >
@@ -196,7 +195,7 @@
               </div>
             </div>
             <hr class="custom-hr" />
-            <div class="flex pt-2 pb-2">
+            <div class="gym flex pt-2 pb-2">
               <div
                 class="grow-1 justify-items-center content-center bg-gray-200 pt-5 pb-5 ml-4 border border-gray-300 rounded-sm"
               >
@@ -215,7 +214,7 @@
               </div>
             </div>
             <hr class="custom-hr" />
-            <div class="flex pt-2 pb-2">
+            <div class="Celebrations flex pt-2 pb-2">
               <div
                 class="grow-1 justify-items-center content-center bg-gray-200 pt-5 pb-5 ml-4 border border-gray-300 rounded-sm"
               >
@@ -234,7 +233,7 @@
               </div>
             </div>
             <hr class="custom-hr" />
-            <div class="flex pt-2 pb-2">
+            <div class="Fuel flex pt-2 pb-2">
               <div
                 class="grow-1 justify-items-center content-center bg-gray-200 pt-5 pb-5 ml-4 border border-gray-300 rounded-sm"
               >
@@ -255,8 +254,12 @@
             <hr class="custom-hr" />
           </div>
           <!--Transactions displayed section-->
-          <div class="Transaction_History grow-15 border-2 border-gray-300 rounded-sm mb-3">
-            <div class="flex justify-between mt-4 pt-6 pb-7 ml-6 pl-5 mr-6 pr-8 border-2 border-gray-300 rounded-lg mb-3">
+          <div
+            class="Transaction_History grow-15 border-2 border-gray-300 rounded-sm mb-3"
+          >
+            <div
+              class="flex justify-between mt-4 pt-6 pb-7 ml-6 pl-5 mr-6 pr-8 border-2 border-gray-300 rounded-lg mb-3"
+            >
               <div>
                 <h4 class="text-3xl font-medium">Transaction History</h4>
                 <p class="font-semibold text-gray-400">
@@ -267,28 +270,64 @@
                 <button
                   class="w-m-[5rem] pt-2 pb-2 pl-2 border-2 border-gray-300 rounded-sm"
                 >
-                  <span class="inline-block text-2xl pr-3">+  Add New</span>
+                  <span class="inline-block text-2xl pr-3" onclick="openModal()">+ Add New</span>
                 </button>
               </div>
             </div>
-            <div class="ml-7 mr-6 pt-2 pb-2 border-2 border-gray-300 rounded-lg mb-3">
-              <ul class="flex justify-between">
-                <li class="text-2xl text-gray-400">Merchant Name</li>
-                <li class="text-2xl text-gray-400">Amount</li>
-                <li class="text-2xl text-gray-400">Date</li>
-                <li class="text-2xl text-gray-400">Status</li>
+            <div
+              class="ml-7 mr-6 pt-2 pb-2 border-2 border-gray-300 rounded-lg mb-3"
+            >
+              <ul class="flex text-center">
+                <li class="text-2xl text-gray-400 flex-1">Merchant Name</li>
+                <li class="text-2xl text-gray-400 flex-1">Amount</li>
+                <li class="text-2xl text-gray-400 flex-1">Date</li>
               </ul>
             </div>
-            <div class="Transactions_container scrollable-half h-[22rem] ml-8 mr-6 border-2 border-gray-300 rounded-lg mb-4">
-              <div class="flex w-full pt-3 pb-4 text-3xl border-2 border-gray-300 rounded-lg mt-2">
-                <div><p>Amazon</p></div>
-                <div style="flex-grow: 1; text-align: center;"><p>$129.99</p></div>
-                <div style="flex-grow: 1; text-align: center;"><p>April 10 2025</p></div>
-                <div style="flex-grow: 1; text-align: center;"><button>Completed</button></div>
+            <div
+              class="Transactions_container scrollable-half h-[22rem] ml-8 mr-6 border-2 border-gray-300 rounded-lg mb-4"
+            >
             </div>
           </div>
         </div>
       </div>
+      <div class="modal-overlay" id="modalOverlay"></div>
+
+      <div class="modal" id="modal">
+        <form id="recordTransactionForm">
+          <h2>Record a Transaction</h2>
+          <label for="merchantName">Merchant Name:</label>
+          <input
+            type="text"
+            id="merchantName"
+            placeholder="Enter merchant name"
+          />
+          <span id="merchantNameError" style="color:red; display:none;">Please enter a valid Merchant Name.</span>
+          <label for="amount">Amount:</label>
+          <input type="text" id="amount" placeholder="Enter amount" />
+          <span id="amountError" style="color:red; display:none;">Please enter a valid number.</span>
+
+          <label for="transactionType">Choose an option:</label>
+          <select id="transactionType">
+            <option value="">Select</option>
+            <option value="shopping">Shopping</option>
+            <option value="subscriptions">Subscriptions</option>
+            <option value="gym">Gym</option>
+            <option value="celebrations">Celebrations</option>
+            <option value="fuel">Fuel</option>
+          </select>
+          <span id="selectionError" style="color:red; display:none;">Please select an option.</span>
+
+          <label for="date">Select Date:</label>
+          <input type="date" id="date" />
+          <span id="dateError" style="color:red; display:none;">Please select a date.</span>
+
+          <button type="submit" id="recordTransactionsubmitButton" style="display: block;">Submit</button>
+        </form>
+        <button onclick="closeModal()">Close</button>
+      </div>
+      <script src="script.js"></script>
     </div>
   </body>
 </html>
+
+
