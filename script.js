@@ -21,23 +21,18 @@ deposit.addEventListener('click', (e) => {
     depositMoney("500");
 });
 shopping.addEventListener('click', (e)=> {
-    alert("I have been clicked");
     retrieveUserTransactions("shopping");
 });
 subscriptions.addEventListener('click', (e)=> {
-    alert("I have been clicked");
     retrieveUserTransactions("subscriptions");
 });
 gym.addEventListener('click', (e)=> {
-    alert("I have been clicked");
     retrieveUserTransactions("gym");
 });
 celebrations.addEventListener('click', (e)=> {
-    alert("I have been clicked");
     retrieveUserTransactions("celebrations");
 });
 fuel.addEventListener('click', (e)=> {
-    alert("I have been clicked");
     retrieveUserTransactions("fuel");
 });
 recordTransactionButton.addEventListener('click', (e) => {
@@ -51,9 +46,23 @@ recordTransactionButton.addEventListener('click', (e) => {
 
 
 //Remove this global variable
-let moneyInAccount = 0;
+let moneyInAccount = 100000;
+// This section handles the logic of our project
+setUserAccountBalance(moneyInAccount);
 
-setUserAccountBalance();
+
+
+
+
+
+
+
+
+
+
+
+
+//Functions Section
 
 function setUserMoney(operation ,money) {
     //This handles the amount of money in an account
@@ -100,7 +109,6 @@ function getUserTransaction(TransactionMerchant, TransactionAmount, TransactionD
             };
             storeUserTransaction(TransactionSelection, transactionObject);
             closeModal();
-            alert("Transaction has been recorded successfully");
             // Reset the form fields
             resetForm();
             // Call the function to display the transactions
@@ -125,10 +133,19 @@ function storeUserTransaction(type, transactionObject) {
     localStorage.setItem(type, JSON.stringify(objectsArray));
 }
 
+function removeChildContainer() {
+    // Remove all child elements from the transactionsContainer
+    while (transactionsContainer.firstChild) {
+        transactionsContainer.removeChild(transactionsContainer.firstChild);
+    }
+}
+
 function retrieveUserTransactions(type) {
     const retrievedTransaction = JSON.parse(localStorage.getItem(type));
+    removeChildContainer();
     if (!retrievedTransaction) {
         console.log("No transactions found for this type.");
+        displayNoTransactionRecorded()
         return;
     }
     generateEachUserTransaction(retrievedTransaction);
@@ -139,8 +156,18 @@ function displayUserTransactions(htmlElem) {
     transactionsContainer.appendChild(htmlElem);
 }
 
+function displayNoTransactionRecorded() {
+    const mainDiv = document.createElement("div");
+    mainDiv.style.border = "2px solid black";
+    mainDiv.style.padding = "10px";
+    mainDiv.style.display = "flex";
+    mainDiv.style.marginTop = "1.2rem";
+    mainDiv.style.gap = "10px";
+    mainDiv.textContent = "No transactions recorded yet";
+    transactionsContainer.appendChild(mainDiv);
+}
+
 function generateEachUserTransaction(arr) {
-    console.log(arr);
     arr.forEach(division => {
         // Create the main div
         const mainDiv = document.createElement("div");
@@ -149,7 +176,6 @@ function generateEachUserTransaction(arr) {
         mainDiv.style.display = "flex";
         mainDiv.style.marginTop = "1.2rem";
         mainDiv.style.gap = "10px";
-        console.log(division);
 
         // Create and append four inner divs
         for (let i = 0; i < 3; i++) {
@@ -166,7 +192,6 @@ function generateEachUserTransaction(arr) {
         displayUserTransactions(mainDiv);
     });
 }
-
 
 //Section to handle user transactions input fields
     function openModal() {
@@ -220,24 +245,81 @@ function generateEachUserTransaction(arr) {
             recordTransactionDateError.style.display = "none";
         }
         getUserTransaction(recordTransactionMerchant, recordTransactionAmount, recordTransactionDate, recordTransactionSelection);
+        setUserMoney("sub", recordTransactionAmount);
+        setUserAccountBalance(getUserMoney());
         return;
     }
     
 
+function searchTransactions() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const allTransactions = getAllLocalStorage();
+    const result = filterByDate(allTransactions, searchInput);
+    function evaluateSearchResult(result) {
+        console.log(result);
+        for (let value in result) {
+            if (result[value].length === 0) {
+                removeChildContainer();
+                displayNoTransactionRecorded();
+            } else {
+                removeChildContainer();
+                const allInnerObjects = getAllFilteredInnerObjects(result);
+                generateEachUserTransaction(allInnerObjects);
+                break;
+            }
+        }
+    }
+    evaluateSearchResult(result);
+}
+
+function getAllFilteredInnerObjects(obj) {
+    //Check if some of the objects are empty
+    const firstArray = obj.shopping || [];
+    const secondArray = obj.subscriptions || [];
+    const thirdArray = obj.gym || [];
+    const fourthArray = obj.celebrations || [];
+    const fifthArray = obj.fuel || [];
+    const allArrays = [firstArray, secondArray, thirdArray, fourthArray, fifthArray];
+    const allInnerObjects = allArrays.filter(array => array.length > 0);
+    // loop through each array and get the inner objects
+    const mergedArray = allInnerObjects.reduce((acc, array) => {
+        return acc.concat(array);
+    }, []);
+    console.log(mergedArray);
+    return mergedArray;
+}
+
+
+
+function filterByDate(transactions, targetDate) {
+    let filteredResults = {};
+
+    Object.keys(transactions).forEach(category => {
+        filteredResults[category] = transactions[category].filter(item => item.date === targetDate);
+    });
+
+    return filteredResults;
+}
+
+
+function getAllLocalStorage() {
+  const allItems = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    try {
+      allItems[key] = JSON.parse(localStorage.getItem(key));
+    } catch (e) {
+      allItems[key] = localStorage.getItem(key); // Fallback for non-JSON values
+    }
+  }
+  return allItems;
+}
 
 
 
 
 
-
-
-
-
-// Get to save the user transactions successfully in the machine with different usernames
 // Generate a deposit page for user first Logging in to have their transactions shown - get the user amount
 
 
 
-
-
-// Generate a transaction form to enter the expenses, with amount, select of category type to determine the expense

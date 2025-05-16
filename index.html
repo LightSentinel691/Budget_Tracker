@@ -22,11 +22,12 @@
         <div class="searchbar flex p-4 relative mt-1 mb-5 ml-7 mr-9">
           <div class="grow-4 p-1 border border-indigo-600">
             <input
-              type="text"
+              type="date"
               name="Searchbar"
-              id="Search"
-              placeholder=" search by Merchants or item"
+              id="searchInput"
+              placeholder=" Search by date..."
               class="min-w-full pl-12 pt-1 pb-1 text-lg"
+              onchange="searchTransactions()"
             />
             <img
               src="images/zoom-or-search-interface-tool-symbol.png"
